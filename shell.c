@@ -8,7 +8,7 @@ int main(void)
 {
 	char input[MAX_IN_SIZE];
 	char *token;
-	const char *Prompt = "($) ";
+	const char *Prompt = "$ ";
 
 	while (1)
 	{
