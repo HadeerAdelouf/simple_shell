@@ -10,19 +10,22 @@ void execute_command(char *command)
 {
 	pid_t pid = fork();
 	int status;
+	char *envp[] = {NULL};
 
+	if (pid == -1)
+	{
+		perror("Fork failed");
+		return;
+	}
 	if (pid == 0)
 	{
-		char *args[] = {"/bin/sh", "-c", command, NULL};
-		char *envp[] = {NULL};
+		char *args[] = {"/bin/sh", "-c", NULL, NULL};
+
+		args[2] = (char *)command;
 
 		execve("/bin/sh", args, envp);
 		write(STDOUT_FILENO, "Command not found\n", _strlen("Command not found\n"));
 		_exit(1);
-	}
-	else if (pid < 0)
-	{
-		perror("Fork failed");
 	}
 	else
 	{
