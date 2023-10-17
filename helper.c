@@ -7,17 +7,17 @@
  */
 void runcmd(char **rgv, char **arv, char **envp)
 {
-	pid_t mychild;
+	pid_t pid;
 	int stat;
 
-	mychild = fork();
+	pid = fork();
 
-	if (mychild == -1)
+	if (pid == -1)
 	{
 		perror("Process Error");
 		exit(EXIT_FAILURE);
 	}
-	if (mychild == 0)
+	if (pid == 0)
 	{
 
 		if (execve(rgv[0], rgv, envp) == (-1))
@@ -76,3 +76,4 @@ int _strcmp(char *str1, char *str2)
 
 	return (dif);
 }
+

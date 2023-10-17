@@ -67,3 +67,4 @@ void handle_exit(char *str)
 		exit(EXIT_SUCCESS);
 	}
 }
+

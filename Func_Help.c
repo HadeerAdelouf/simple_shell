@@ -67,12 +67,12 @@ char *_itoa(int num)
  * @command: the command.
  * Return: void.
  */
-void _error(denum *n, char **arv, char *command)
+void _error(Shell *n, char **arv, char *command)
 {
 	int len;
 	char *error_msg, *cnt_str;
 
-	cnt_str = _itoa(n->cnt);
+	cnt_str = _itoa(n->count);
 	len = _strlen(arv[0]) + _strlen(command) + _strlen(cnt_str) + 17;
 	error_msg = malloc(len);
 	if (!error_msg)
@@ -101,17 +101,17 @@ void signal_handler(int num)
 	write(STDOUT_FILENO, "\n$ ", _strlen("\n$ "));
 }
 /**
- * prompt - a shell using c
+ * printprompt - a shell using c
  * @arv: argument by user
  * @envp: envirement variable argument
  * @flag: flag argument for mode
  */
-void prompt(char **arv, char **envp, bool flag)
+void printprompt(char **arv, char **envp, bool flag)
 {
 	int x;
 	size_t n = 0;
 	ssize_t num_c = 0;
-	char *ptr = NULL, *rgv[MAX_C];
+	char *ptr = NULL, *in_store[MAX_C];
 
 
 	while (1)
@@ -131,15 +131,16 @@ void prompt(char **arv, char **envp, bool flag)
 		if (_strlen(ptr) == 0)
 			continue;
 		x = 0;
-		rgv[x] = strtok(ptr, " \n");
+		in_store[x] = strtok(ptr, " \n");
 		handle_exit(ptr);
-		handle_path(rgv, ptr);
-		while (rgv[x])
+		handle_path(in_store, ptr);
+		while (in_store[x])
 		{
 			x++;
-			rgv[x] = strtok(NULL, " \n");
+			in_store[x] = strtok(NULL, " \n");
 		}
-		runcmd(rgv, arv, envp);
+		runcmd(in_store, arv, envp);
 	}
 	free(ptr);
 }
+
